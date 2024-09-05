@@ -50,7 +50,7 @@ namespace DailyTaskRemider.API
                 .UseMsmqQueues(@"FormatName:Direct=OS:icc12076\private$\default");
 
 
-            BackgroundJob.Enqueue(() => Console.WriteLine("Hello from Hangfire"));
+            BackgroundJob.Enqueue(() => Console.WriteLine("Message sent from client - Hello server!"));
         }
     }
 }
