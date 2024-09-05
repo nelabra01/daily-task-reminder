@@ -17,21 +17,18 @@ namespace DailyTaskReminder.Server
             var connString = ConfigurationManager.ConnectionStrings["hangfire"]?.ToString();
             var queueConnString = ConfigurationManager.AppSettings["hangfireQueue"].ToString();
 
-            var ServiceBusQueueOptions = new ServiceBusQueueOptions()
-            {
-                QueuePollInterval = TimeSpan.FromSeconds(60),
-                ConnectionString = queueConnString,
-                Queues = new[] { "default" }
-            };
-            var sqlServerStorageOption = new SqlServerStorageOptions
-            {
-                QueuePollInterval = TimeSpan.FromSeconds(60),
-            };
             GlobalConfiguration.Configuration
                 .UseSqlServerStorage(connString)
-                //.UseServiceBusQueues(option);
+#if DEBUG
                 .UseMsmqQueues(queueConnString);
-            //.UseMsmqQueues("private$\\hanfire-queue", new[] {"hanfire-queue"} );
+#else
+                .UseServiceBusQueues(new ServiceBusQueueOptions()
+                     {
+                         QueuePollInterval = TimeSpan.FromSeconds(60),
+                         ConnectionString = queueConnString,
+                         Queues = new[] { "default" }
+                     });
+#endif
 
             var options = new BackgroundJobServerOptions
             {
