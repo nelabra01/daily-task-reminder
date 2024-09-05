@@ -23,6 +23,33 @@ namespace DailyTaskRemider.API
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
+            ConfigureHangfire();
+        }
+
+        private void ConfigureHangfire()
+        {
+            var connString = string.Empty;            
+            var sbConnString = string.Empty;
+            var option = new ServiceBusQueueOptions()
+            {
+                QueuePollInterval = TimeSpan.FromSeconds(60),
+                ConnectionString = sbConnString,
+                Queues = new[] { "default" }
+            };
+            var sqlServerStorageOption = new SqlServerStorageOptions
+            {
+                QueuePollInterval = TimeSpan.FromSeconds(60),
+            };
+            Hangfire.GlobalConfiguration.Configuration
+                .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+                .UseSimpleAssemblyNameTypeSerializer()
+                .UseRecommendedSerializerSettings()
+                .UseSqlServerStorage(connString, sqlServerStorageOption)
+                //.UseServiceBusQueues(option);
+                .UseMsmqQueues(@"FormatName:Direct=OS:icc12076\private$\default");
+
+
+            BackgroundJob.Enqueue(() => Console.WriteLine("Hello from Hangfire"));
         }
     }
 }
