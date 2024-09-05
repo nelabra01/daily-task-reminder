@@ -29,12 +29,12 @@ namespace DailyTaskRemider.API
 
         private void ConfigureHangfire()
         {
-            var connString = ConfigurationManager.ConnectionStrings["default"]?.ToString();
-            var sbConnString = string.Empty;
+            var dbConnString = ConfigurationManager.ConnectionStrings["default"]?.ToString();
+            var queueConnString = ConfigurationManager.AppSettings["hangfireQueue"].ToString();
             var option = new ServiceBusQueueOptions()
             {
                 QueuePollInterval = TimeSpan.FromSeconds(60),
-                ConnectionString = sbConnString,
+                ConnectionString = queueConnString,
                 Queues = new[] { "default" }
             };
             var sqlServerStorageOption = new SqlServerStorageOptions
@@ -45,9 +45,9 @@ namespace DailyTaskRemider.API
                 .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
                 .UseSimpleAssemblyNameTypeSerializer()
                 .UseRecommendedSerializerSettings()
-                .UseSqlServerStorage(connString, sqlServerStorageOption)
-                //.UseServiceBusQueues(option);
-                .UseMsmqQueues(@"FormatName:Direct=OS:icc12076\private$\default");
+                .UseSqlServerStorage(dbConnString, sqlServerStorageOption)
+                //.UseServiceBusQueues(option)
+                .UseMsmqQueues(queueConnString);
 
 
             BackgroundJob.Enqueue(() => Console.WriteLine("Message sent from client - Hello server!"));
