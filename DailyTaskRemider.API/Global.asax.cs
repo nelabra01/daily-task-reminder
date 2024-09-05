@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
 using System.Web;
@@ -28,7 +29,7 @@ namespace DailyTaskRemider.API
 
         private void ConfigureHangfire()
         {
-            var connString = string.Empty;            
+            var connString = ConfigurationManager.ConnectionStrings["default"]?.ToString();
             var sbConnString = string.Empty;
             var option = new ServiceBusQueueOptions()
             {
