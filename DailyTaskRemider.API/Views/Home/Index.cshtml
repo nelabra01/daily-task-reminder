@@ -1,0 +1,33 @@
+﻿@Model 
+
+<main>
+    <section class="row" aria-labelledby="aspnetTitle">
+        <h1 id="aspnetTitle">Daily Tasks Reminder</h1>
+        <p class="lead">Click the "Send" Button to send a task reminder</p>
+
+    </section>
+    <div class="row">
+
+        <section class="col-md-4" aria-labelledby="gettingStartedTitle">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Task Description</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>>
+                <tbody>
+                @for(int i = 0; i < Model.Length; i++)
+                {
+                    <tr>
+                        <td scope="row">@i</td>
+                        <td>@Model[i]</td>
+                        <td>@Html.ActionLink("Send Reminder", "SendReminder", new { message = Model[i] })</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </section>
+    </div>
+</main>
