@@ -14,32 +14,37 @@ namespace DailyTaskReminder.Server
     {
         static void Main(string[] args)
         {
-            var connString = ConfigurationManager.ConnectionStrings["hangfire"]?.ToString();
-            var queueConnString = ConfigurationManager.AppSettings["hangfireQueue"].ToString();
 
-            GlobalConfiguration.Configuration
-                .UseSqlServerStorage(connString)
+            try
+            {
+                var connString = ConfigurationManager.ConnectionStrings["hangfire"]?.ToString();
+                var queueConnString = ConfigurationManager.AppSettings["hangfireQueue"].ToString();
+                Console.WriteLine(connString);
+                Console.WriteLine(queueConnString);
+
+                GlobalConfiguration.Configuration
+                    .UseSqlServerStorage(connString)
 #if DEBUG
                 .UseMsmqQueues(queueConnString);
 #else
-                .UseServiceBusQueues(new ServiceBusQueueOptions()
-                     {
-                         QueuePollInterval = TimeSpan.FromSeconds(60),
-                         ConnectionString = queueConnString,
-                         Queues = new[] { "default" }
-                     });
+                    .UseServiceBusQueues(new ServiceBusQueueOptions()
+                    {
+                        ConnectionString = queueConnString,
+                        Queues = new[] { "default" }
+                    });
 #endif
 
-            var options = new BackgroundJobServerOptions
-            {
-                SchedulePollingInterval = TimeSpan.FromSeconds(60),
-            };
-
-            using (var server = new BackgroundJobServer())
-            {
-                Console.WriteLine("Hangfire Server Started. Press any key to exit...");
-                Console.ReadLine();
+                using (var server = new BackgroundJobServer())
+                {
+                    Console.WriteLine("Hangfire Server Started. Press any key to exit...");
+                    Console.ReadLine();
+                }
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
         }
     }
 }

@@ -42,7 +42,6 @@ namespace DailyTaskRemider.API
 #else
                 .UseServiceBusQueues(new ServiceBusQueueOptions()
                      {
-                         QueuePollInterval = TimeSpan.FromSeconds(60),
                          ConnectionString = queueConnString,
                          Queues = new[] { "default" }
                      });
