@@ -26,7 +26,7 @@ jobs:
         run: nuget restore
 
       - name: Publish webapp to folder
-        run: msbuild ./DailyTaskRemider.API/DailyTaskRemider.API.csproj /nologo /verbosity:m /t:Build /t:pipelinePreDeployCopyAllFilesToOneFolder /p:_PackageTempDir="\published\" /p:Configuration=Release
+        run: msbuild ./DailyTaskRemider.sln /nologo /verbosity:m /t:Build /t:pipelinePreDeployCopyAllFilesToOneFolder /p:_PackageTempDir="\published\" /p:Configuration=Release
 
       - name: Publish webjob to folder
         run: msbuild ./DailyTaskReminder.Console/DailyTaskReminder.Server.csproj /nologo /verbosity:m /t:Build /t:pipelinePreDeployCopyAllFilesToOneFolder /p:PublishDir="\published\" /p:Configuration=Release
