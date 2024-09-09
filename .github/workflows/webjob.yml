@@ -26,10 +26,13 @@ jobs:
         run: nuget restore
 
       - name: Publish webapp to folder
-        run: msbuild ./DailyTaskRemider.API/DailyTaskRemider.API.csproj /nologo /verbosity:m /t:Build /t:pipelinePreDeployCopyAllFilesToOneFolder /p:_PackageTempDir="\published\" /p:Configuration=Release
 
-      - name: Publish webjob to folder
-        run: msbuild ./DailyTaskReminder.Console/DailyTaskReminder.Server.csproj /nologo /verbosity:m /t:Build /t:pipelinePreDeployCopyAllFilesToOneFolder /p:_PackageTempDir="/published/**" /p:Configuration=Release
+        run: msbuild ./DailyTaskRemider.API/DailyTaskRemider.API.csproj /nologo /verbosity:m /t:Build /t:pipelinePreDeployCopyAllFilesToOneFolder /p:Configuration=Release;OutputPath="\published\"
+
+        #run: msbuild ./DailyTaskRemider.API/DailyTaskRemider.API.csproj /nologo /verbosity:m /t:Build /t:pipelinePreDeployCopyAllFilesToOneFolder /p:_PackageTempDir="\published\" /p:Configuration=Release
+
+      #      - name: Publish webjob to folder
+      #        run: msbuild ./DailyTaskReminder.Console/DailyTaskReminder.Server.csproj /nologo /verbosity:m /t:Build /#t:pipelinePreDeployCopyAllFilesToOneFolder /p:_PackageTempDir="/published/**" /p:Configuration=Release
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
