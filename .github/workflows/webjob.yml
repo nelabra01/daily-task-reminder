@@ -34,7 +34,9 @@ jobs:
       - name: move data
         shell: bash
         run: |
-          dir .
+          cd ..
+          cd /daily-task-reminder
+          dir 
           mv /published/webjob/app-data /published
           rm -fr webjob
 
