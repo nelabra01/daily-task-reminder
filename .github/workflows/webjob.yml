@@ -34,8 +34,7 @@ jobs:
       - name: move data
         shell: bash
         run: |
-          cd published/webjob/
-          mv webjob/app-data .
+          mv ./webjob/app-data .
           rm -fr webjob
 
       - name: Upload artifact for deployment job
