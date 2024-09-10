@@ -31,6 +31,13 @@ jobs:
       - name: Publish webjob to folder
         run: msbuild ./DailyTaskReminder.Console/DailyTaskReminder.Server.csproj /nologo /verbosity:m /t:Build /t:pipelinePreDeployCopyAllFilesToOneFolder /p:_PackageTempDir="\published\webjob" /p:Configuration=Release /p:PublishSingleFile=true
 
+      - name: move data
+        shell: bash
+        run: |
+          cd published/webjob/
+          mv webjob/app-data .
+          rm -fr webjob
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
