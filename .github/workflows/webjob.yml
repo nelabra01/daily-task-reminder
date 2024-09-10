@@ -27,7 +27,7 @@ jobs:
 
       - name: Publish webapp to folder
 
-        run: msbuild ./DailyTaskRemider.API/DailyTaskRemider.API.csproj /nologo /verbosity:m /t:Build /p:Configuration=Release /p:OutputPath="\published\"
+        run: msbuild ./DailyTaskRemider.API/DailyTaskRemider.API.csproj /nologo /verbosity:m /t:Publish /p:Configuration=Release /p:OutputPath=./published
 
         #run: msbuild ./DailyTaskRemider.API/DailyTaskRemider.API.csproj /nologo /verbosity:m /t:Build /t:pipelinePreDeployCopyAllFilesToOneFolder /p:_PackageTempDir="\published\" /p:Configuration=Release
 
