@@ -22,8 +22,8 @@ jobs:
       - name: Setup NuGet
         uses: NuGet/setup-nuget@v1.0.5
 
-      - name: Restore NuGet packages
-        run: nuget restore
+      #- name: Restore NuGet packages
+      #run: nuget restore
 
       - name: Publish webapp to folder
         run: msbuild ./DailyTaskRemider.API/DailyTaskRemider.API.csproj /nologo /verbosity:m /t:Build /t:pipelinePreDeployCopyAllFilesToOneFolder /p:_PackageTempDir="\published\" /p:Configuration=Release /p:PublishSingleFile=true
@@ -34,7 +34,7 @@ jobs:
       - name: move data
         shell: bash
         run: |
-          mv ./webjob/app-data .
+          mv ./published/webjob/app-data ./published
           rm -fr webjob
 
       - name: Upload artifact for deployment job
