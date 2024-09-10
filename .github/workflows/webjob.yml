@@ -34,6 +34,7 @@ jobs:
       - name: move data
         shell: bash
         run: |
+          cd ..
           dir
           mv /published/webjob/app-data /published
           rm -fr webjob
