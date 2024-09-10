@@ -35,12 +35,6 @@ jobs:
         shell: bash
         run: |
           dir
-          cd ..
-          dir 
-          cd
-          dir
-          cd /source
-          dir
           mv /published/webjob/app-data /published
           rm -fr webjob
 
