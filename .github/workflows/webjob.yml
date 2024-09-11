@@ -36,5 +36,5 @@ jobs:
         with:
           name: ASP-app
           path: "/published/**"
-          shell: bash
-          run: find ~ -name "published"
+      - shell: bash
+        run: find ~ -name "published"
