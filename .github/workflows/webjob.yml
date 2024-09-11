@@ -35,10 +35,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ASP-app
-          shell: bash
-          run: |
-            mv /published/webjob/app-data /published
-            rm -fr webjob
           path: "/published/**"
 
   deploy:
@@ -53,6 +49,9 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: ASP-app
+      - run: |
+          mv /published/webjob/app-data /published
+          rm -fr webjob
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
