@@ -35,11 +35,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ASP-app
+          shell: bash
+          run: dir /published
           path: "/published/**"
-
-      - name: Check Path
-        shell: bash
-        run: dir "/published"
 
   deploy:
     runs-on: windows-latest
