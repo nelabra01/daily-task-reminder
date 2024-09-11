@@ -39,7 +39,7 @@ jobs:
 
       - name: Check Path
         shell: bash
-        run: dir
+        run: dir "/published"
 
   deploy:
     runs-on: windows-latest
