@@ -49,7 +49,9 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: ASP-app
-      - run: dir
+      - run: |
+          dir
+          mv ./webjob/app_data .
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
