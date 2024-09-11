@@ -36,4 +36,4 @@ jobs:
         with:
           name: ASP-app
           path: "/published/**"
-      - run: dir
+      - run: dir ~
