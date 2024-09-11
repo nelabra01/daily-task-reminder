@@ -27,11 +27,7 @@ namespace DailyTaskRemider.API.Controllers
 
         public RedirectToRouteResult SendReminder(string message)
         {
-            // BackgroundJob.Schedule(() => Console.WriteLine(message), TimeSpan.FromSeconds(5));
-            for(int i = 0; i < 100; i++)
-            {
-                BackgroundJob.Enqueue(() => Console.WriteLine("New message on its way:" + i));
-            }
+            BackgroundJob.Enqueue(() => Console.WriteLine("New message on its way in five seconds"));
             
             BackgroundJob.Schedule(() => Console.WriteLine(message), TimeSpan.FromSeconds(5));
             return RedirectToAction("Index");
