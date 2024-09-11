@@ -28,6 +28,10 @@ jobs:
       - name: Publish webapp to folder
         run: msbuild ./DailyTaskRemider.API/DailyTaskRemider.API.csproj /nologo /verbosity:m /t:Build /t:pipelinePreDeployCopyAllFilesToOneFolder /p:_PackageTempDir="\published\" /p:Configuration=Release /p:PublishSingleFile=true
 
+      - name: track build path
+        shell: bash
+        run: dir
+
       - name: Publish webjob to folder
         run: msbuild ./DailyTaskReminder.Console/DailyTaskReminder.Server.csproj /nologo /verbosity:m /t:Build /t:pipelinePreDeployCopyAllFilesToOneFolder /p:_PackageTempDir="\published\webjob" /p:Configuration=Release /p:PublishSingleFile=true
 
