@@ -50,7 +50,7 @@ jobs:
         with:
           name: ASP-app
       - run: |
-          mv /published/webjob/app-data /published
+          mv ./webjob/app-data .
           rm -fr webjob
 
       - name: Deploy to Azure Web App
