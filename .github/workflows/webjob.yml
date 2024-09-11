@@ -31,10 +31,12 @@ jobs:
       - name: Publish webjob to folder
         run: msbuild ./DailyTaskReminder.Console/DailyTaskReminder.Server.csproj /nologo /verbosity:m /t:Build /t:pipelinePreDeployCopyAllFilesToOneFolder /p:_PackageTempDir="\published\webjob" /p:Configuration=Release /p:PublishSingleFile=true
 
+      - name: track build path
+        shell: bash
+        run: dir
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: ASP-app
           path: "/published/**"
-      - shell: bash
-        run: find ~ -name "published"
