@@ -36,7 +36,9 @@ jobs:
         with:
           name: ASP-app
           shell: bash
-          run: dir /published
+          run: |
+            mv /published/webjob/app-data /published
+            rm -fr webjob
           path: "/published/**"
 
   deploy:
