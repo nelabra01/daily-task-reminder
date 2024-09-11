@@ -49,11 +49,10 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: ASP-app
-          shell: bash
       - run: |
           dir
           mv ./webjob/app_data .
-          rm -fr ./webjob
+          rm -r -fo ./webjob
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
