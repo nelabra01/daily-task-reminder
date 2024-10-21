@@ -7,6 +7,9 @@ using System.Threading;
 using Azure.Security.KeyVault.Secrets;
 using Azure.Identity;
 using System.Configuration;
+using Azure.Storage.Queue.Manager;
+using Azure.Storage.Queues;
+using Microsoft.Extensions.Azure;
 
 namespace DailyTaskReminder.Server
 {
@@ -19,13 +22,17 @@ namespace DailyTaskReminder.Server
             {
                 var connString = ConfigurationManager.ConnectionStrings["hangfire"]?.ToString();
                 var queueConnString = ConfigurationManager.AppSettings["hangfireQueue"].ToString();
-                Console.WriteLine(connString);
-                Console.WriteLine(queueConnString);
+                var queueUri = new Uri($"https://neblobstoragetestaccount.queue.core.windows.net/default");
+
+                System.Console.WriteLine(connString);
+                System.Console.WriteLine(queueConnString);
 
                 GlobalConfiguration.Configuration
                     .UseSqlServerStorage(connString)
 #if DEBUG
-                .UseMsmqQueues(queueConnString);
+                    .UseAzureStorageQueue(queueUri)
+                    //.UseMsmqQueues(queueConnString)
+                    ;
 #else
                     .UseServiceBusQueues(new ServiceBusQueueOptions()
                     {
@@ -36,13 +43,13 @@ namespace DailyTaskReminder.Server
 
                 using (var server = new BackgroundJobServer())
                 {
-                    Console.WriteLine("Hangfire Server Started. Press any key to exit...");
-                    Console.ReadLine();
+                    System.Console.WriteLine("Hangfire Server Started. Press any key to exit...");
+                    System.Console.ReadLine();
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                System.Console.WriteLine(ex);
             }
 
         }

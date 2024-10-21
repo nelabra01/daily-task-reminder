@@ -8,9 +8,13 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Azure.Identity;
+using Azure.Storage.Queue.Manager;
+using Azure.Storage.Queues;
 using Hangfire;
 using Hangfire.Azure.ServiceBusQueue;
 using Hangfire.SqlServer;
+using Microsoft.Extensions.Azure;
 
 namespace DailyTaskRemider.API
 {
@@ -31,14 +35,18 @@ namespace DailyTaskRemider.API
         {
             var dbConnString = ConfigurationManager.ConnectionStrings["default"]?.ToString();
             var queueConnString = ConfigurationManager.AppSettings["hangfireQueue"].ToString();
+            var queueUri = new Uri($"https://neblobstoragetestaccount.queue.core.windows.net/default");
 
-            Hangfire.GlobalConfiguration.Configuration
+            var config = Hangfire.GlobalConfiguration.Configuration
                 .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
                 .UseSimpleAssemblyNameTypeSerializer()
                 .UseRecommendedSerializerSettings()
                 .UseSqlServerStorage(dbConnString)
 #if DEBUG
-                .UseMsmqQueues(queueConnString);
+                //.Entry.AddQueueServiceClient(new QueueServiceClient(queueUri))
+                .UseAzureStorageQueue(queueUri)
+                //.UseMsmqQueues(queueConnString)
+                ;
 #else
                 .UseServiceBusQueues(new ServiceBusQueueOptions()
                      {
@@ -46,8 +54,7 @@ namespace DailyTaskRemider.API
                          Queues = new[] { "default" }
                      });
 #endif
-
-            BackgroundJob.Enqueue(() => Console.WriteLine("Message sent from client - Hello server!"));
+            BackgroundJob.Enqueue(() => Console.WriteLine("Message sent from client using hangfire"));
         }
     }
 }
