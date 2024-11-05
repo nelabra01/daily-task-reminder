@@ -4,9 +4,9 @@
 name: Build and deploy WebApp and Webjob - ne-app-srvc-dhl-poc
 
 on:
-  # push:
-  #   branches:
-  #     - master
+  push:
+    branches:
+      - master
   workflow_dispatch:
 
 jobs:
