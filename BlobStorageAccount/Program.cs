@@ -37,7 +37,8 @@ namespace BlobStorageAccount
         {
             //var success = UploadContent();
             var url = DownloadFile();
-        }
+        } 
+        
 
         private static string DownloadFile()
         {
