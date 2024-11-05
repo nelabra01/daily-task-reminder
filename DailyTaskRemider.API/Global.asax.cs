@@ -42,18 +42,7 @@ namespace DailyTaskRemider.API
                 .UseSimpleAssemblyNameTypeSerializer()
                 .UseRecommendedSerializerSettings()
                 .UseSqlServerStorage(dbConnString)
-#if DEBUG
-                //.Entry.AddQueueServiceClient(new QueueServiceClient(queueUri))
-                .UseAzureStorageQueue(queueUri, new DefaultAzureCredential())
-                //.UseMsmqQueues(queueConnString)
-                ;
-#else
-                .UseServiceBusQueues(new ServiceBusQueueOptions()
-                     {
-                         ConnectionString = queueConnString,
-                         Queues = new[] { "default" }
-                     });
-#endif
+                .UseAzureStorageQueue(queueUri, new DefaultAzureCredential());
             BackgroundJob.Enqueue(() => Console.WriteLine("Message sent from client using hangfire"));
         }
     }

@@ -29,17 +29,7 @@ namespace DailyTaskReminder.Server
 
                 GlobalConfiguration.Configuration
                     .UseSqlServerStorage(connString)
-#if DEBUG
-                    .UseAzureStorageQueue(queueUri, new DefaultAzureCredential())
-                    //.UseMsmqQueues(queueConnString)
-                    ;
-#else
-                    .UseServiceBusQueues(new ServiceBusQueueOptions()
-                    {
-                        ConnectionString = queueConnString,
-                        Queues = new[] { "default" }
-                    });
-#endif
+                    .UseAzureStorageQueue(queueUri, new DefaultAzureCredential());
 
                 using (var server = new BackgroundJobServer())
                 {
