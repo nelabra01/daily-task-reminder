@@ -22,7 +22,7 @@ namespace DailyTaskReminder.Server
             {
                 var connString = ConfigurationManager.ConnectionStrings["hangfire"]?.ToString();
                 var queueConnString = ConfigurationManager.AppSettings["hangfireQueue"].ToString();
-                var queueUri = new Uri($"https://neblobstoragetestaccount.queue.core.windows.net/default");
+                var queueUri = new Uri(new Uri($"https://neblobstoragetestaccount.queue.core.windows.net/"), "queue1");
 
                 System.Console.WriteLine(connString);
                 System.Console.WriteLine(queueConnString);
@@ -30,7 +30,7 @@ namespace DailyTaskReminder.Server
                 GlobalConfiguration.Configuration
                     .UseSqlServerStorage(connString)
 #if DEBUG
-                    .UseAzureStorageQueue(queueUri)
+                    .UseAzureStorageQueue(queueUri, new DefaultAzureCredential())
                     //.UseMsmqQueues(queueConnString)
                     ;
 #else

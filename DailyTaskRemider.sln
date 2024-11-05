@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DailyTaskReminder.Server", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.Queue.Manager", "Azure.Storage.Queue.Manager\Azure.Storage.Queue.Manager.csproj", "{AA652122-1971-433E-BEE6-F43D84981258}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlobStorageAccount", "BlobStorageAccount\BlobStorageAccount.csproj", "{F6FD1993-1F92-496D-BA7E-FCB0C3ED8B50}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{AA652122-1971-433E-BEE6-F43D84981258}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA652122-1971-433E-BEE6-F43D84981258}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA652122-1971-433E-BEE6-F43D84981258}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6FD1993-1F92-496D-BA7E-FCB0C3ED8B50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6FD1993-1F92-496D-BA7E-FCB0C3ED8B50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6FD1993-1F92-496D-BA7E-FCB0C3ED8B50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6FD1993-1F92-496D-BA7E-FCB0C3ED8B50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

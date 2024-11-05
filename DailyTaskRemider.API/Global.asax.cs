@@ -35,7 +35,7 @@ namespace DailyTaskRemider.API
         {
             var dbConnString = ConfigurationManager.ConnectionStrings["default"]?.ToString();
             var queueConnString = ConfigurationManager.AppSettings["hangfireQueue"].ToString();
-            var queueUri = new Uri($"https://neblobstoragetestaccount.queue.core.windows.net/default");
+            var queueUri = new Uri(new Uri($"https://neblobstoragetestaccount.queue.core.windows.net/"), "queue1");
 
             var config = Hangfire.GlobalConfiguration.Configuration
                 .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
@@ -44,7 +44,7 @@ namespace DailyTaskRemider.API
                 .UseSqlServerStorage(dbConnString)
 #if DEBUG
                 //.Entry.AddQueueServiceClient(new QueueServiceClient(queueUri))
-                .UseAzureStorageQueue(queueUri)
+                .UseAzureStorageQueue(queueUri, new DefaultAzureCredential())
                 //.UseMsmqQueues(queueConnString)
                 ;
 #else
